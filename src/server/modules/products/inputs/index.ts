@@ -1,0 +1,5 @@
+export { InputTaxes } from './input-taxes'
+export { UpdateProductInput } from './update-product.input'
+export { CreateProductInput } from './create-product.input'
+export { InputAdditionalInformation } from './input-additional-information'
+export * from './serveral-prices.input'
