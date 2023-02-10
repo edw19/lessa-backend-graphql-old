@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '-': ^0.0.1
   '@apollo/server': ^4.3.3
   '@typegoose/typegoose': ^10.1.1
   '@types/bcrypt': ^5.0.0
@@ -44,7 +43,6 @@ specifiers:
   typescript: ^4.9.5
 
 dependencies:
-  '-': 0.0.1
   '@apollo/server': 4.3.3_graphql@15.3.0
   '@typegoose/typegoose': 10.1.1_mongoose@6.9.0
   '@types/body-parser': 1.19.2
@@ -89,10 +87,6 @@ devDependencies:
   typescript: 4.9.5
 
 packages:
-
-  /-/0.0.1:
-    resolution: {integrity: sha512-3HfneK3DGAm05fpyj20sT3apkNcvPpCuccOThOPdzz8sY7GgQGe0l93XH9bt+YzibcTIgUAIMoyVJI740RtgyQ==}
-    dev: false
 
   /@apollo/cache-control-types/1.0.2_graphql@15.3.0:
     resolution: {integrity: sha512-Por80co1eUm4ATsvjCOoS/tIR8PHxqVjsA6z76I6Vw0rFn4cgyVElQcmQDIZiYsy41k8e5xkrMRECkM2WR8pNw==}
