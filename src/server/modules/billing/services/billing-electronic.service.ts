@@ -3,17 +3,17 @@ import { DocumentService } from 'modules/billing/services/documents.service'
 import { SignDocument } from 'modules/billing/services/sign-document.service'
 import { SoapService } from 'modules/billing/services/soap.service'
 import { CompanyService } from "modules/companies/services/company.services";
-import { ObjectId } from 'mongodb'
+import { Types } from 'mongoose'
 
 type GenerateElectronicInvoice = {
-    company: ObjectId
-    client: ObjectId
+    company: Types.ObjectId
+    client: Types.ObjectId
     total: number
     products: any
 }
 
 export class BillingElectronic {
-    static async validateFieldsNecessayForBillingElectronic(id: ObjectId): Promise<boolean | string[]> {
+    static async validateFieldsNecessayForBillingElectronic(id: Types.ObjectId): Promise<boolean | string[]> {
         const company = await CompanyService.getCompany(id)
 
         const messages = [];

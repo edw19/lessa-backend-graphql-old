@@ -1,10 +1,10 @@
-import { ObjectId } from 'mongodb';
+import { Types } from 'mongoose';
 import { ObjectType, Field } from 'type-graphql'
 
 @ObjectType()
 export class GetSalesType {
     @Field({ name: "id" })
-    readonly _id: ObjectId
+    readonly _id: Types.ObjectId
 
     @Field()
     totalSale: number;

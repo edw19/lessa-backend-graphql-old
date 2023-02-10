@@ -1,7 +1,7 @@
 import { ObjectType, Field } from 'type-graphql'
 import { getModelForClass, ModelOptions, prop } from "@typegoose/typegoose";
 import { BasePropsEntity } from "modules/base/base-props-entity";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 
 @ModelOptions({
     options: { customName: "typecashmovements" }
@@ -9,7 +9,7 @@ import { ObjectId } from "mongodb";
 @ObjectType()
 export class TypeCashMovements extends BasePropsEntity {
     @Field({ name: 'id' })
-    readonly _id?: ObjectId
+    readonly _id?: Types.ObjectId
 
     @Field()
     @prop()

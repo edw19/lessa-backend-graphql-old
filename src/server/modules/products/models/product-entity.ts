@@ -2,10 +2,12 @@ import { ObjectType, Field, Int } from "type-graphql";
 import { getModelForClass, prop, modelOptions, plugin, index } from "@typegoose/typegoose";
 import { Taxes } from './Taxes'
 import { AdditionalInformation } from './AdditionalInformation'
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { BasePropsEntity } from "../../base/base-props-entity";
 import paginationPlugin, { PaginateModel } from 'typegoose-cursor-pagination';
 import { SeveralPrices } from "./several-prices.entity";
+import { ObjectIdScalar } from "server/graphql/object-id-scalar";
+import { Categories } from "server/modules/categories/categories.model";
 
 @plugin(paginationPlugin)
 @index({ name: 1 })
@@ -20,11 +22,11 @@ import { SeveralPrices } from "./several-prices.entity";
 })
 @ObjectType()
 export class Product extends BasePropsEntity {
-  @Field({ name: 'id' })
-  readonly _id: ObjectId;
+  @Field(() => ObjectIdScalar, { name: 'id' })
+  readonly _id: Types.ObjectId;
 
   @prop({ required: true })
-  category: ObjectId;
+  category: Types.ObjectId;
 
   @Field({ nullable: true })
   @prop()

@@ -1,6 +1,6 @@
 import { ObjectType, Field } from "type-graphql";
 import { getModelForClass, prop } from "@typegoose/typegoose";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 
 @ObjectType()
 export class Establishment {
@@ -9,11 +9,11 @@ export class Establishment {
 
     // fields for handler establishment
     @prop({ required: true })
-    company: ObjectId;
+    company: Types.ObjectId;
 
-    // @Field(() => [ObjectId])
-    @prop({ required: true, type: () => [ObjectId] })
-    admins: ObjectId[];
+    // @Field(() => [Types.ObjectId])
+    @prop({ required: true, type: () => [Types.ObjectId] })
+    admins: Types.ObjectId[];
 
     @Field({ nullable: true })
     @prop()

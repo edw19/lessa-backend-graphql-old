@@ -5,7 +5,7 @@ import forge from 'node-forge'
 import { createConnection } from '../../utils/createConnection'
 import { CompanyModel } from '../../modules/companies/entities/company.entity'
 // import { getToken } from 'next-auth/jwt'
-import { ObjectId } from 'mongodb'
+import { Types } from 'mongoose'
 
 export const saveSign = async (req: any, res: any) => {
   if (Object.keys(req.cookies).length === 0) {
@@ -49,7 +49,7 @@ export const saveSign = async (req: any, res: any) => {
   })
 }
 
-function uploadSignatureFile (files: any, companyId: ObjectId): Promise<any> {
+function uploadSignatureFile (files: any, companyId: Types.ObjectId): Promise<any> {
   return new Promise((resolve, reject) => {
     const splitFile: [string] = files.signature.name.split('.')
     const fileExt = splitFile[splitFile.length - 1]
@@ -71,7 +71,7 @@ function uploadSignatureFile (files: any, companyId: ObjectId): Promise<any> {
   })
 }
 
-function createPathUploads (companyId: ObjectId): string {
+function createPathUploads (companyId: Types.ObjectId): string {
   const pathCompany = path.resolve(
     __dirname,
     `../../../../../src/server/services/signature/uploads/${companyId}`

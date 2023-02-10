@@ -1,9 +1,9 @@
-import { ObjectId } from 'mongodb';
+import { Types } from 'mongoose';
 import { EstablishmentModel } from './establishment.entity';
 
 type CreateEstablishment = {
-    companyId: ObjectId;
-    userAdmin: ObjectId;
+    companyId: Types.ObjectId;
+    userAdmin: Types.ObjectId;
     address?: string;
     phone?: string;
 };
@@ -27,11 +27,11 @@ export class EstablishmentService {
         }
     }
 
-    static async getEstablishments(company: ObjectId) {
+    static async getEstablishments(company: Types.ObjectId) {
         return await EstablishmentModel.find({ company });
     }
 
-    static async getMainEstablishment(companyId: ObjectId) {
+    static async getMainEstablishment(companyId: Types.ObjectId) {
         const establishment = await EstablishmentModel.findOne({ company: companyId, establishmentCode: 1 });
         return establishment;
     }

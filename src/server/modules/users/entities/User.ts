@@ -1,6 +1,6 @@
 import { ObjectType, Field } from "type-graphql";
 import { getModelForClass, prop, mongoose, modelOptions } from "@typegoose/typegoose";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 
 @modelOptions({
   options: { customName: "users" },
@@ -17,13 +17,13 @@ export class User {
   id?: string;
 
   // @prop()
-  // userOwner?: mongoose.Types.ObjectId;
+  // userOwner?: mongoose.Types.Types.ObjectId;
 
-  @Field(() => ObjectId,{ nullable: true })
+  @Field(() => Types.ObjectId,{ nullable: true })
   @prop()
   company?: mongoose.Types.ObjectId;
 
-  @Field(() => ObjectId,{ nullable: true })
+  @Field(() => Types.ObjectId,{ nullable: true })
   @prop()
   establishment?: mongoose.Types.ObjectId;
 

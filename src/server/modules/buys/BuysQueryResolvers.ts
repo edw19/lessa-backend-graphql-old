@@ -6,7 +6,7 @@ import { BuysService } from 'modules/buys/services/buys.services'
 import { Vendor } from 'modules/vendors/vendor.entity'
 import { VendorsService } from 'modules/vendors/vendors.services'
 import { BuysResults } from './types'
-import { ObjectId } from 'mongodb'
+import { Types } from 'mongoose'
 
 @Resolver(() => Buys)
 export class BuysQueryResolver {
@@ -34,7 +34,7 @@ export class BuysQueryResolver {
 
   @Query(() => Buys)
   async getBuy (
-    @Arg('id') id: ObjectId
+    @Arg('id') id: Types.ObjectId
   ) {
     return await BuysService.getBuy(id)
   }

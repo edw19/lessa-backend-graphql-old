@@ -1,6 +1,6 @@
 import { Field, InputType } from 'type-graphql';
 import { MaxLength, Length } from 'class-validator';
-import { ObjectId } from 'mongodb';
+import { Types } from 'mongoose';
 
 @InputType()
 export class InputUserLogin {
@@ -28,7 +28,7 @@ export class InputUserCompany {
   pwd: string;
 
   @Field()
-  company: ObjectId;
+  company: Types.ObjectId;
 }
 
 @InputType()

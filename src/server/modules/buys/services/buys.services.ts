@@ -1,13 +1,13 @@
 import { Buys, BuysModel } from '../entities/buys.entity'
 import { generateObjectId } from 'server/utils/generateId'
 import { DatesServices } from '../../../services/dates.services'
-import { ObjectId } from 'mongodb'
+import { Types } from 'mongoose'
 import { mongoose } from '@typegoose/typegoose'
 import { ProductMutationService } from 'server/modules/products/services/products-mutations.service'
 import { ProductsQueryService } from 'server/modules/products/services/products-queries.services'
 
 type BuysParams = {
-  company: ObjectId;
+  company: Types.ObjectId;
   queryBy: string;
   startDate: Date;
   endDate: Date;
@@ -47,7 +47,7 @@ export class BuysService {
     return { newBuy, productsUpdated }
   }
 
-  static async getBuy(id: ObjectId) {
+  static async getBuy(id: Types.ObjectId) {
     return await BuysModel.findById(id)
   }
 
@@ -90,7 +90,7 @@ export class BuysService {
     const result = await BuysModel.aggregate([
       {
         $match: {
-          company: new mongoose.Types.ObjectId(company),
+          company: new mongoose.Types.Types.ObjectId(company),
           createdAt: {
             $gte: parseDateStart,
             $lte: parseDateEnd
@@ -112,11 +112,11 @@ export class BuysService {
     return { buys, total }
   }
 
-  static async deleteBuy(id: ObjectId) {
+  static async deleteBuy(id: Types.ObjectId) {
     await BuysModel.findByIdAndDelete(id);
   }
 
-  static async deleteBuyService(id: ObjectId) {
+  static async deleteBuyService(id: Types.ObjectId) {
     try {
       const currentBuy = await BuysService.getBuy(id)
       if (!currentBuy) throw new Error('No se encontro la compra')
@@ -141,7 +141,7 @@ export class BuysService {
     }
   }
 
-  static async payCreditBuy(id: ObjectId) {
+  static async payCreditBuy(id: Types.ObjectId) {
     await BuysModel.findByIdAndUpdate(id, {
       $set: { credit: false }
     })

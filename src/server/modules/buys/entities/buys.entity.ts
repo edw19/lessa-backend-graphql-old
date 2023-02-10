@@ -1,6 +1,6 @@
 import { ObjectType, Field } from 'type-graphql'
 import { getModelForClass, prop, modelOptions } from '@typegoose/typegoose'
-import { ObjectId } from 'mongodb'
+import { Types } from 'mongoose'
 import { PurchasedProducts } from './purchased-products.entity'
 
 @modelOptions({
@@ -18,11 +18,11 @@ export class Buys {
   id?: string;
 
   @prop({ required: true })
-  company: ObjectId;
+  company: Types.ObjectId;
 
   // @Field() EL FIELD FOR GRAPHQL BE RESOLVE IN QUERY GETbYS
   @prop({ ref: 'vendors', required: true })
-  vendor: ObjectId;
+  vendor: Types.ObjectId;
 
   @Field()
   @prop()

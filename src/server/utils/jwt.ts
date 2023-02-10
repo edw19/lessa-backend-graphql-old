@@ -1,14 +1,14 @@
 import { sign, verify } from "jsonwebtoken";
 import { REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET } from "config/variables";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { UsersService } from "server/modules/users/services/users.service";
 
 interface IPayload {
   user: {
-    id: ObjectId;
+    id: Types.ObjectId;
   };
   company: {
-    id: ObjectId;
+    id: Types.ObjectId;
   };
   establishment?: {
     id: string;
@@ -17,7 +17,7 @@ interface IPayload {
 
 interface IPayloadTokenRefresh {
   user: {
-    id: ObjectId;
+    id: Types.ObjectId;
   };
 }
 

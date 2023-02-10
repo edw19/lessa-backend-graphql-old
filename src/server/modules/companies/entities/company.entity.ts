@@ -7,7 +7,7 @@ import {
   defaultClasses,
 } from "@typegoose/typegoose";
 import { Signature } from "./signature.entity";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 
 @modelOptions({
   options: { customName: "companies" },
@@ -23,11 +23,11 @@ export class Company extends defaultClasses.TimeStamps {
   @Field({ nullable: true })
   id: string;
 
-  @Field(() => ObjectId,{ nullable: true })
+  @Field(() => Types.ObjectId,{ nullable: true })
   @prop({ required: true })
   userOwner: mongoose.Types.ObjectId;
 
-  @Field(() => ObjectId,{ nullable: true })
+  @Field(() => Types.ObjectId,{ nullable: true })
   @prop()
   userAdmin: mongoose.Types.ObjectId;
 

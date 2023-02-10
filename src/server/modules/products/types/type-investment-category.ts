@@ -1,11 +1,11 @@
 import { mongoose } from "@typegoose/typegoose";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { Field, ObjectType } from "type-graphql";
 
 @ObjectType()
 export class InvestmentCategory {
-    @Field(() => ObjectId,{ nullable: true })
-    id: mongoose.Types.ObjectId;
+    @Field(() => Types.ObjectId,{ nullable: true })
+    id: mongoose.Types.Types.ObjectId;
 
     @Field()
     name: string;

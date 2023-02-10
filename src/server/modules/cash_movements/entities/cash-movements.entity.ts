@@ -1,22 +1,22 @@
 import { ObjectType, Field } from 'type-graphql';
 import { getModelForClass, prop } from '@typegoose/typegoose'
-import { ObjectId } from 'mongodb';
+import { Types } from 'mongoose';
 import { BasePropsEntity } from 'modules/base/base-props-entity';
 
 @ObjectType()
 export class CashMovements extends BasePropsEntity {
     @Field({ name: "id" })
-    readonly _id?: ObjectId;
+    readonly _id?: Types.ObjectId;
 
     @prop()
-    transactionId?: ObjectId;
+    transactionId?: Types.ObjectId;
 
     @Field({ nullable: true })
     cashMovementName?: string;
 
     @Field({ nullable: true })
     @prop()
-    typeCashMovementsId?: ObjectId; // muebles de oficina | compra de algo | sueldos | pago de servicios | ariendo 
+    typeCashMovementsId?: Types.ObjectId; // muebles de oficina | compra de algo | sueldos | pago de servicios | ariendo 
 
     @Field()
     @prop()

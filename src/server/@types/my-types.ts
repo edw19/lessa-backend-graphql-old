@@ -1,1 +1,1 @@
-export type { ObjectId } from 'mongodb'
+export type { Types.ObjectId } from 'mongodb'

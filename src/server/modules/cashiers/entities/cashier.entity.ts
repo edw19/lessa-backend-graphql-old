@@ -1,19 +1,19 @@
 import { getModelForClass, ModelOptions, prop } from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { Field, ObjectType } from "type-graphql";
 
 @ModelOptions({ options: { customName: "cashiers" } })
 @ObjectType()
 export class Cashier extends TimeStamps {
     @Field({ name: "id" })
-    readonly _id?: ObjectId;
+    readonly _id?: Types.ObjectId;
 
     @prop({ required: true })
-    establishment: ObjectId;
+    establishment: Types.ObjectId;
 
     @prop({ required: true })
-    cashierUserId: ObjectId;
+    cashierUserId: Types.ObjectId;
 
     @Field()
     @prop({ required: true, min: 1, max: 999 })

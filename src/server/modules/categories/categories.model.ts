@@ -5,7 +5,8 @@ import {
   modelOptions,
 } from "@typegoose/typegoose";
 import { BasePropsEntity } from "../base/base-props-entity";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
+import { ObjectIdScalar } from "server/graphql/object-id-scalar";
 
 @modelOptions({
   options: { customName: "categories" },
@@ -19,10 +20,10 @@ import { ObjectId } from "mongodb";
 @ObjectType()
 export class Categories extends BasePropsEntity {
   @Field({ name: "id" })
-  readonly _id: ObjectId;
+  readonly _id: Types.ObjectId;
 
   @prop({ ref: "companies" })
-  company: ObjectId;
+  company: Types.ObjectId;
 
   @Field()
   @prop({ required: true })

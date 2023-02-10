@@ -6,7 +6,7 @@ import { CompanyModel } from "modules/companies/entities";
 import { mongoose } from "@typegoose/typegoose";
 import { JWT } from "server/utils/jwt";
 // import { setCookie } from "server/utils/setCookie";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { UsersService } from "../services/users.service";
 
 @Resolver()
@@ -63,7 +63,7 @@ export class UserResolver {
     );
     // update userOwner and usrAdmin for Companies
     await CompanyModel.findByIdAndUpdate(ctx.req.company!.id, {
-      $set: { userOwner: new mongoose.Types.ObjectId(ctx.req.user.id) },
+      $set: { userOwner: new mongoose.Types.Types.ObjectId(ctx.req.user.id) },
     });
 
     let payload: any = {
@@ -82,7 +82,7 @@ export class UserResolver {
   @Authorized("USER-OWNER")
   @Mutation(() => Boolean)
   accessToCompanyFromOwner(
-    @Arg("company") company: ObjectId,
+    @Arg("company") company: Types.ObjectId,
     @Ctx() ctx: MyContext
   ): Boolean {
     const { accessToken, refreshToken } = JWT.createTokens({

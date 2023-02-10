@@ -1,4 +1,4 @@
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { Product, ProductModel } from "../models/product-entity";
 import { IPaginateResult, IPaginateOptions } from 'typegoose-cursor-pagination';
 import { DatesServices } from "server/services/dates.services";
@@ -7,7 +7,7 @@ import { isNumber } from "class-validator";
 
 type GetProducts = {
     query: {
-        company: ObjectId;
+        company: Types.ObjectId;
         category?: string;
         search?: string
         stock?: number;
@@ -16,11 +16,11 @@ type GetProducts = {
 
 }
 export class ProductsQueryService {
-    static async getProduct(id: ObjectId) {
+    static async getProduct(id: Types.ObjectId) {
         return await ProductModel.findById(id);
     }
 
-    static async verifyProductExists(code: string, company: ObjectId) {
+    static async verifyProductExists(code: string, company: Types.ObjectId) {
         const productExists = await ProductModel.findOne({
             $and: [
                 { company },
@@ -31,7 +31,7 @@ export class ProductsQueryService {
         return false;
     }
 
-    static async getAllProducts(company: ObjectId) {
+    static async getAllProducts(company: Types.ObjectId) {
         const res =  await ProductModel.find({ company });        
         return res
     }
@@ -77,7 +77,7 @@ export class ProductsQueryService {
             console.log("in getProducts", error);
         }
     }
-    static async getProductsExpireInMonth(months: number, company: ObjectId) {
+    static async getProductsExpireInMonth(months: number, company: Types.ObjectId) {
         const date = new Date();
         const parseDateStart = DatesServices.startOfMonth(date);
         const parseDateEnd = DatesServices.addMonthToDate(date, months);

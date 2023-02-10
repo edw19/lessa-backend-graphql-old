@@ -6,7 +6,7 @@ import { SalesCharts, SalesResults, MostSelledProducts, PercentageSalesCredit, G
 import { startOfDay, endOfDay, subDays, addDays, } from "date-fns";
 import { SalesService } from "server/modules/sales/services/sales.services";
 import { generateObjectId } from "server/utils/generateId";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 
 @Resolver(() => Sales)
 export class SalesQueryResolver {
@@ -48,7 +48,7 @@ export class SalesQueryResolver {
 
   @Authorized("USER-COMPANY")
   @Query(() => Sales)
-  async getSale(@Arg("id") id: ObjectId) {
+  async getSale(@Arg("id") id: Types.ObjectId) {
     return await SalesService.getSale(id);
   }
 

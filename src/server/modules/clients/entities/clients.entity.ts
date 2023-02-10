@@ -5,7 +5,7 @@ import {
     modelOptions,
     mongoose,
 } from "@typegoose/typegoose";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { CreditHistory } from './credit-history.entity'
 
 @modelOptions({
@@ -21,9 +21,9 @@ export class Clients {
     @Field()
     id: string;
 
-    @Field(() => ObjectId, { nullable: false })
+    @Field(() => Types.ObjectId, { nullable: false })
     @prop({ required: true })
-    company: ObjectId;
+    company: Types.ObjectId;
 
     // change name by identification
     @Field({ nullable: true })

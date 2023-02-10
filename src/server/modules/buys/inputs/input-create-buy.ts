@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongodb'
+import { Types } from 'mongoose'
 import { Field, InputType } from 'type-graphql'
 import { PurchasedProducts } from '../entities/purchased-products.entity'
 // import { InputProductsBuys } from './input-products-buys'
@@ -6,7 +6,7 @@ import { PurchasedProducts } from '../entities/purchased-products.entity'
 @InputType()
 export class CreateBuysInput {
     @Field()
-    vendor: ObjectId;
+    vendor: Types.ObjectId;
 
     @Field()
     totalSubTotalWithoutTaxation: number;

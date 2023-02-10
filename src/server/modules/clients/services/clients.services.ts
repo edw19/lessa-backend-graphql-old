@@ -1,10 +1,10 @@
 import { mongoose } from "@typegoose/typegoose";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { SalesModel } from "modules/sales/entities";
 import { Clients, ClientsModel } from "modules/clients/entities";
 
 export class ClientsService {
-  static async searchClients(search: string, company: ObjectId) {
+  static async searchClients(search: string, company: Types.ObjectId) {
     const $regex = ".*" + search + ".*";
     return await ClientsModel
       .find({
@@ -26,7 +26,7 @@ export class ClientsService {
       }).limit(10)
   }
 
-  static async getClient(id: string | ObjectId): Promise<Clients | null> {
+  static async getClient(id: string | Types.ObjectId): Promise<Clients | null> {
     ClientsModel
     return await ClientsModel.findById(id);
   }
@@ -34,7 +34,7 @@ export class ClientsService {
   static async getBestClients(companyId: any, orderBy: string, limit: number) {
     const type = (orderBy === 'amount') ? '$total' : 1;
     const result = await SalesModel.aggregate()
-      .match({ company: new mongoose.Types.ObjectId(companyId) })
+      .match({ company: new mongoose.Types.Types.ObjectId(companyId) })
       .lookup({
         from: 'clients',
         localField: 'client',
@@ -60,7 +60,7 @@ export class ClientsService {
 
   static async addClientCreditPayment(
     { client, total, date, payAmount, pay = true }:
-      { client: ObjectId | string; total: number; payAmount: number; date: Date, pay?: boolean }) {
+      { client: Types.ObjectId | string; total: number; payAmount: number; date: Date, pay?: boolean }) {
     const result = await ClientsModel.findOneAndUpdate(
       { _id: client },
       {
@@ -79,7 +79,7 @@ export class ClientsService {
     return { id: result?.id, credit: result?.credit };
   }
 
-  static async getCurrentClientCredit(id: ObjectId) {
+  static async getCurrentClientCredit(id: Types.ObjectId) {
     const client = await ClientsModel.findById(id);
     return client ? client.credit : 0;
   }

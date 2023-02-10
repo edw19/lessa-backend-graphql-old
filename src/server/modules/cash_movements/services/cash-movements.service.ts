@@ -1,11 +1,11 @@
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { CashierService } from "server/modules/cashiers/services/cashier.service";
 import { DatesServices } from "server/services/dates.services";
 import { CashMovements, CashMovementsEntity } from "../entities/cash-movements.entity";
 import { TypeCashMovementsService } from "./type-cash-movements.service";
 
 export class CashMovementsService {
-    static async getAll({ company, queryBy }: { company: ObjectId, queryBy: string }) { // should I use cashier instead of company?
+    static async getAll({ company, queryBy }: { company: Types.ObjectId, queryBy: string }) { // should I use cashier instead of company?
         const {
             parseDateStart,
             parseDateEnd
@@ -37,7 +37,7 @@ export class CashMovementsService {
         });
     }
 
-    static async deleteCashMovementByTransactionId(transactionId: ObjectId) {
+    static async deleteCashMovementByTransactionId(transactionId: Types.ObjectId) {
         return CashMovementsEntity.findOneAndDelete({ transactionId });
     }
 

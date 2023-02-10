@@ -6,7 +6,7 @@ import {
   SIGNATURE_KEY_SECRET
 } from 'config/variables'
 import crytojs from 'crypto-js'
-import { ObjectId } from 'mongodb'
+import { Types } from 'mongoose'
 
 const cloudinary = require('cloudinary').v2
 
@@ -17,7 +17,7 @@ cloudinary.config({
 })
 
 interface SignatureInfo {
-  companyId: ObjectId;
+  companyId: Types.ObjectId;
   path: string;
   key: string;
   name: string;
@@ -48,17 +48,17 @@ export class CompanyService {
     }
   }
 
-  static async getCompanies(userOwner: ObjectId) {
+  static async getCompanies(userOwner: Types.ObjectId) {
     const companies = await CompanyModel.find({ userOwner })
     return companies
   }
 
-  static async getCompany(id: ObjectId) {
+  static async getCompany(id: Types.ObjectId) {
     const company = await CompanyModel.findById(id)
     return company
   }
 
-  static async getTradeName(id: ObjectId) {
+  static async getTradeName(id: Types.ObjectId) {
     const company = await CompanyModel.findById(id).select('tradename -_id')
     return company?.tradename
   }
@@ -68,7 +68,7 @@ export class CompanyService {
     return id
   }
 
-  static async getSignatureInfo(id: ObjectId): Promise<{ signatureKey: string; signaturePath: string }> {
+  static async getSignatureInfo(id: Types.ObjectId): Promise<{ signatureKey: string; signaturePath: string }> {
     const result = await CompanyModel.findById(id);
     const signatureSelected = result?.signatures?.find((sign: any) => sign.selected === true)
 
@@ -110,7 +110,7 @@ export class CompanyService {
     return serie
   }
 
-  static async addNextSequential(id: ObjectId): Promise<void> {
+  static async addNextSequential(id: Types.ObjectId): Promise<void> {
     await CompanyModel.findByIdAndUpdate(id, { $inc: { sequential: 1 } })
   }
 
@@ -143,7 +143,7 @@ export class CompanyService {
     return company
   }
 
-  static async selectSignature(companyId: ObjectId, signatureId: string) {
+  static async selectSignature(companyId: Types.ObjectId, signatureId: string) {
     try {
       const company = await CompanyModel.findById(companyId).then(comp => {
         comp?.signatures?.forEach(sig => {

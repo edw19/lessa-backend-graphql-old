@@ -1,19 +1,19 @@
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { IncomingMessage } from "http";
 
 declare module "next" {
   export interface NextApiRequest extends IncomingMessage {
     user: {
-      id: ObjectId;
+      id: Types.ObjectId;
     };
     company: {
-      id: ObjectId;
+      id: Types.ObjectId;
     };
     establishment: {
-      id: ObjectId;
+      id: Types.ObjectId;
     };
     cashier: {
-      id: ObjectId;
+      id: Types.ObjectId;
     }
   }
 }

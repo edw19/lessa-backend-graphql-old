@@ -1,6 +1,6 @@
 import { mongoose } from "@typegoose/typegoose";
 import { endOfDay, startOfDay } from "date-fns";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { generateObjectId } from "server/utils/generateId";
 import { Sales, SalesModel } from "modules/sales/entities";
 import { DatesServices } from "../../../services/dates.services";
@@ -9,10 +9,10 @@ import { ProductMutationService } from "server/modules/products/services/product
 import { CashMovementsService } from "server/modules/cash_movements/services/cash-movements.service";
 import { CashierService } from "server/modules/cashiers/services/cashier.service";
 
-type GetSales = { company: ObjectId, queryBy: string, startDate: Date, endDate: Date };
+type GetSales = { company: Types.ObjectId, queryBy: string, startDate: Date, endDate: Date };
 
 export class SalesService {
-    static async getSale(id: ObjectId) {
+    static async getSale(id: Types.ObjectId) {
         return await SalesModel.findById(id)
     }
 
@@ -29,19 +29,24 @@ export class SalesService {
                 }
             });
         }
-
-        return await SalesModel.create(sale);
+        const res = await SalesModel.create(sale);
+        return res
     }
 
     static async createSaleService(sale: Sales) {
         const products = [];
         const newSale = await SalesService.createSale(sale);
 
+        console.log({ products: sale.products })
         for (const product of sale.products) {
+
             if (product.kind === "CommonProduct" || product.kind === "Service") continue;
             const productUpdated = await ProductMutationService.updateStock(product.productId, product.units, "substract");
+            console.log({ productUpdated: product.productId })
             products.push({ id: productUpdated?.id, stock: productUpdated?.stock })
         }
+
+        // console.log({ aqui: products, newSale })
 
         return { saleId: newSale.id, products };
     }
@@ -149,7 +154,7 @@ export class SalesService {
         }
     }
 
-    static async countSales({ company, dateStart, dateEnd }: { company: ObjectId, dateStart: Date, dateEnd: Date }): Promise<number> {
+    static async countSales({ company, dateStart, dateEnd }: { company: Types.ObjectId, dateStart: Date, dateEnd: Date }): Promise<number> {
         const parseDateStart = startOfDay(new Date(dateStart))
         const parseDateEnd = endOfDay(new Date(dateEnd))
         const total = await SalesModel
@@ -217,7 +222,7 @@ export class SalesService {
         return result.map((product: any) => ({ name: product.product, units: product.count }))
     }
 
-    static async percentageCreditSales({ company }: { company: ObjectId }) {
+    static async percentageCreditSales({ company }: { company: Types.ObjectId }) {
         const totalSales = await SalesModel.find({ company }).countDocuments()
 
         const totalSalesCredit = await SalesModel.find({ company, credit: true }).countDocuments()
@@ -238,7 +243,7 @@ export class SalesService {
 
     static async saveCreditOnSale(
         { client, total, createdAt, amountToBePaid }:
-            { client: ObjectId; total: number; createdAt: Date, amountToBePaid: number }) {
+            { client: Types.ObjectId; total: number; createdAt: Date, amountToBePaid: number }) {
         const date = new Date(createdAt);
 
         const currentCredit = await ClientsService.getCurrentClientCredit(client)
@@ -265,11 +270,11 @@ export class SalesService {
         }
     }
 
-    static async deleteSale(id: ObjectId) {
+    static async deleteSale(id: Types.ObjectId) {
         return await SalesModel.findByIdAndDelete(id);
     }
 
-    static async deleteSaleService(id: ObjectId, cashierId: ObjectId) {
+    static async deleteSaleService(id: Types.ObjectId, cashierId: Types.ObjectId) {
         // verify if sale exists
         const sale = await SalesService.getSale(id);
         if (!sale) throw new Error("venta no existe")

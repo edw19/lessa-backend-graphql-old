@@ -3,7 +3,7 @@ import { mongoose } from "@typegoose/typegoose";
 import { InputTaxes } from './input-taxes'
 import { InputAdditionalInformation } from './input-additional-information'
 import { SeveralPrices } from '../models/several-prices.entity'
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 
 @InputType()
 export class CreateProductInput {
@@ -22,8 +22,8 @@ export class CreateProductInput {
     @Field({ nullable: true })
     description: string;
 
-    @Field(() => ObjectId,{ nullable: true })
-    category: mongoose.Types.ObjectId;
+    @Field(() => Types.ObjectId,{ nullable: true })
+    category: mongoose.Types.Types.ObjectId;
 
     @Field({ nullable: true })
     priceBuy: number;

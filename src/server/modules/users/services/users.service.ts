@@ -1,6 +1,6 @@
 import { UserModel } from "modules/users/entities";
 import bcrypt from 'bcrypt'
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { USER_ADMIN_COMPANY } from "server/services/roles";
 import { UserRegisterInput } from "../inputs/user-register.input";
 import { CompanyService } from "server/modules/companies/services/company.services";
@@ -10,9 +10,9 @@ import { CashierService } from "server/modules/cashiers/services/cashier.service
 import { TypeCashMovementsService } from "server/modules/cash_movements/services/type-cash-movements.service";
 
 type CreateUserForTheCompanyProps = {
-    company: ObjectId;
-    establishment: ObjectId;
-    cashier: ObjectId;
+    company: Types.ObjectId;
+    establishment: Types.ObjectId;
+    cashier: Types.ObjectId;
     username: string;
     pwd: string;
     role: string[];
@@ -29,7 +29,7 @@ export class UsersService {
         return await UserModel.create(user)
     }
 
-    static async getUsers(company: ObjectId) {
+    static async getUsers(company: Types.ObjectId) {
         return await UserModel.find({ company });
     }
 
@@ -53,7 +53,7 @@ export class UsersService {
         throw new Error("Credeciales Inválidas");
     }
 
-    static async getUser(id: ObjectId) {
+    static async getUser(id: Types.ObjectId) {
         return await UserModel.findById(id).select("-pwd");
     }
 
@@ -77,7 +77,7 @@ export class UsersService {
         return user!.role;
     }
 
-    static async userExists(id: ObjectId | null) {
+    static async userExists(id: Types.ObjectId | null) {
         const user = await UserModel.findById(id);
         if (!user) return false;
         return true;
@@ -129,7 +129,7 @@ export class UsersService {
 }
 
 // previous servicios 
-// static async createUserCompany(user: any, userOwner: ObjectId) {
+// static async createUserCompany(user: any, userOwner: Types.ObjectId) {
 //     try {
 //       const userExist = await UserModel.findOne({ email: user.email });
 //       if (userExist) {

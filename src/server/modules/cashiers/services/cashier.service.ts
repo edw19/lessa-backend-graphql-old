@@ -1,17 +1,17 @@
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { TypeCashMovementsService } from "server/modules/cash_movements/services/type-cash-movements.service";
 import { Cashier, CashierEntity } from "../entities/cashier.entity";
 
 export class CashierService {
-    static async getOne(id: ObjectId) {
+    static async getOne(id: Types.ObjectId) {
         return await CashierEntity.findById(id);
     }
 
-    static getALl(establishment: ObjectId) {
+    static getALl(establishment: Types.ObjectId) {
         return CashierEntity.find({ establishment });
     }
 
-    static async getCashierByUserId(userId: ObjectId) {
+    static async getCashierByUserId(userId: Types.ObjectId) {
         return await CashierEntity.findOne({ cashierUserId: userId });
     }
 
@@ -22,10 +22,10 @@ export class CashierService {
     static async updateCash(
         { cashierId, amount, typeCashMovementsId, cashMovementName, company }:
             {
-                typeCashMovementsId?: ObjectId;
-                company: ObjectId;
+                typeCashMovementsId?: Types.ObjectId;
+                company: Types.ObjectId;
                 cashMovementName?: string;
-                cashierId: ObjectId;
+                cashierId: Types.ObjectId;
                 amount: number;
             }) {
         let typeMovement;

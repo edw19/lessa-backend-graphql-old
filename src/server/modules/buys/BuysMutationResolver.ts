@@ -4,7 +4,7 @@ import { CreateBuysInput } from './inputs'
 import { ReturnAfterDeleteBuys } from './types'
 import { BuysService } from 'modules/buys/services/buys.services'
 import { CreateBuyType } from './types/create-buy.type'
-import { ObjectId } from 'mongodb'
+import { Types } from 'mongoose'
 @Resolver()
 export class BuysMutationResolver {
   @Authorized('USER-COMPANY')
@@ -15,13 +15,13 @@ export class BuysMutationResolver {
 
   @Authorized('USER-COMPANY')
   @Mutation(() => ReturnAfterDeleteBuys)
-  async deleteBuy(@Arg('id') id: ObjectId) {
+  async deleteBuy(@Arg('id') id: Types.ObjectId) {
     return await BuysService.deleteBuyService(id)
   }
 
   @Authorized('USER-COMPANY')
-  @Mutation(() => ObjectId)
-  async payCreditBuy(@Arg('id') id: ObjectId) {
+  @Mutation(() => Types.ObjectId)
+  async payCreditBuy(@Arg('id') id: Types.ObjectId) {
     await BuysService.payCreditBuy(id)
     return id
   }

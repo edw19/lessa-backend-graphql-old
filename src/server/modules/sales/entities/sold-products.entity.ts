@@ -1,8 +1,7 @@
 import { ObjectType, Field, InputType } from "type-graphql";
 import { prop, modelOptions } from "@typegoose/typegoose";
 import { Taxes } from "modules/products/models/Taxes";
-import { ObjectId } from "mongodb";
-
+import { Types } from "mongoose"
 @modelOptions({
     schemaOptions: {
         versionKey: false,
@@ -13,9 +12,9 @@ import { ObjectId } from "mongodb";
 @ObjectType()
 @InputType("SoldProductsInput")
 export class SoldProducts {
-    @Field(() => String)
+    @Field(() => Types.ObjectId)
     @prop({ required: true, ref: "products" })
-    productId: ObjectId;
+    productId: Types.ObjectId;
 
     @Field(() => String, { nullable: true })
     @prop({ required: true })
@@ -41,7 +40,7 @@ export class SoldProducts {
     @prop()
     priceBuy: number;
 
-    @Field({ nullable: true })
+    @Field(() => Taxes, { nullable: true })
     @prop({ type: () => Taxes })
     taxes: Taxes;
 }

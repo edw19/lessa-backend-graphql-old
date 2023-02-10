@@ -1,4 +1,4 @@
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { ObjectIdScalar } from "./object-id-scalar";
 import { buildSchemaSync } from "type-graphql";
 // middlewares
@@ -77,7 +77,7 @@ export const createSchema = () => buildSchemaSync({
   ],
   authChecker,
   // globalMiddlewares: [TypegooseMiddleware],
-  scalarsMap: [{ type: ObjectId, scalar: ObjectIdScalar }],
+  scalarsMap: [{ type: Types.ObjectId, scalar: ObjectIdScalar }],
   dateScalarMode: 'isoDate',
   validate: false,
 });

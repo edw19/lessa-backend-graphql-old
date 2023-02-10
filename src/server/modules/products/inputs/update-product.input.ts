@@ -1,7 +1,7 @@
 import { Field, InputType } from "type-graphql";
 import { InputTaxes } from './input-taxes'
 import { InputAdditionalInformation } from './input-additional-information'
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { SeveralPrices } from "../models/several-prices.entity";
 
 @InputType()
@@ -13,7 +13,7 @@ export class UpdateProductInput {
     kind: string;
 
     @Field()
-    category: ObjectId
+    category: Types.ObjectId
 
     @Field()
     code: string;

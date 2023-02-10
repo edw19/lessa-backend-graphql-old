@@ -1,5 +1,5 @@
 import { Company, CompanyModel } from 'modules/companies/entities'
-import { ObjectId } from 'mongodb';
+import { Types } from 'mongoose';
 import { Field, InputType } from 'type-graphql';
 
 
@@ -25,7 +25,7 @@ export class UpdateCompanyInput {
 }
 
 type UpdateCompany = UpdateCompanyInput & {
-    company: ObjectId;
+    company: Types.ObjectId;
 }
 
 export const updateCompany = async ({ company, ...fields }: UpdateCompany): Promise<Company | null> => {

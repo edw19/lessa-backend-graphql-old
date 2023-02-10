@@ -1,4 +1,4 @@
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose";
 import { Field, InputType } from "type-graphql";
 import { SoldProducts } from "../entities";
 // import { ProductsSaleInput } from './products-sale.input'
@@ -6,7 +6,7 @@ import { SoldProducts } from "../entities";
 @InputType()
 export class CreateSaleInput {
   @Field({ nullable: true })
-  client: ObjectId;
+  client: Types.ObjectId;
 
   @Field()
   credit: boolean;

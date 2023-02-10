@@ -1,5 +1,5 @@
 import { VendorModel } from 'modules/vendors/vendor.entity';
-import { ObjectId } from 'mongodb';
+import { Types } from 'mongoose';
 
 export class VendorsService {
     static async getVendorById({ id }: { id: string }) {
@@ -7,7 +7,7 @@ export class VendorsService {
         return vendor
     }
 
-    static async deleteVender(id: ObjectId): Promise<ObjectId> {
+    static async deleteVender(id: Types.ObjectId): Promise<Types.ObjectId> {
         const vendor = await VendorModel.findByIdAndDelete(id)
         return vendor?.id
     }

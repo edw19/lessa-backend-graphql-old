@@ -1,14 +1,14 @@
 import { prop } from '@typegoose/typegoose';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
-import { ObjectId } from 'mongodb';
+import { Types } from 'mongoose';
 
 export class BasePropsEntity extends TimeStamps {
     @prop()
-    company: ObjectId;
+    company: Types.ObjectId;
 
     @prop()
-    establishment: ObjectId;
+    establishment: Types.ObjectId;
 
-    // cashier: string;  should be ObjectId | string | number  with value 001
+    // cashier: string;  should be Types.ObjectId | string | number  with value 001
 
 }

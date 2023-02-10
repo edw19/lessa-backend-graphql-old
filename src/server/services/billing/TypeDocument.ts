@@ -11,7 +11,7 @@ import {
 import { InputAdditionalInformation, InputTaxes } from "server/modules/products/inputs";
 import { KeyAccess } from "../KeyAccess";
 import { getIva, getSubTotal } from "server/lib";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 
 type IProductsSale = {
   code: string;
@@ -26,8 +26,8 @@ type IProductsSale = {
 }
 
 type IGenerateInvoiceProps = {
-  companyId: ObjectId;
-  clientId: ObjectId | string;
+  companyId: Types.ObjectId;
+  clientId: Types.ObjectId | string;
   products: IProductsSale[];
   total: number;
   tip?: string;

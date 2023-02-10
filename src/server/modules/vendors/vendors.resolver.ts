@@ -11,7 +11,7 @@ import { Vendor, VendorModel } from 'server/modules/vendors/vendor.entity'
 import { Buys } from 'server/modules/buys/entities/buys.entity'
 import { InputVendor } from './create-vendor.input'
 import { VendorsService } from './vendors.services'
-import { ObjectId } from 'mongodb'
+import { Types } from 'mongoose'
 
 @Resolver(() => Buys)
 export class VendorsResolver {
@@ -35,7 +35,7 @@ export class VendorsResolver {
 
   @Authorized('USER-COMPANY')
   @Mutation(() => String)
-  async deleteVendor(@Arg('id', () => ObjectId) id: ObjectId) {
+  async deleteVendor(@Arg('id', () => Types.ObjectId) id: Types.ObjectId) {
     return await VendorsService.deleteVender(id)
   }
 

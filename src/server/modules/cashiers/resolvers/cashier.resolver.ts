@@ -1,4 +1,4 @@
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import type { MyContext } from "server/@types/MyContext";
 import { Arg, Ctx, Query, Resolver, Mutation, InputType, Field } from "type-graphql";
 import { Cashier } from "../entities/cashier.entity";
@@ -11,7 +11,7 @@ class UpdateCashInput {
     cashMovementName?: string;
 
     @Field({ nullable: true })
-    typeCashMovementsId: ObjectId;
+    typeCashMovementsId: Types.ObjectId;
 
     @Field()
     amount: number;

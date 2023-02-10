@@ -1,11 +1,11 @@
 import { ProductModel } from "../models/product-entity";
 import { ProductsQueryService } from "./products-queries.services";
-import { ObjectId } from 'types/my-types'
+import { Types } from "mongoose"
 import { CategoriesService } from "server/modules/categories/categories.services";
 import { GraphQLError } from "graphql";
 
 export class ProductMutationService {
-    static async createProduct(product: any, company: ObjectId) {
+    static async createProduct(product: any, company: Types.ObjectId) {
         const existeCodeProduct = await ProductsQueryService.verifyProductExists(product.code, company);
 
         if (existeCodeProduct)
@@ -30,7 +30,7 @@ export class ProductMutationService {
         return newProduct;
     }
 
-    static async updateProduct(product: any, company: ObjectId) {
+    static async updateProduct(product: any, company: Types.ObjectId) {
         try {
             const existsProduct = await ProductModel.findById(product.id)
             if (!existsProduct) throw new GraphQLError("producto no registrado");
@@ -55,12 +55,14 @@ export class ProductMutationService {
         }
     }
 
-    static async updateStock(id: string | ObjectId, units: number, operation: "add" | "substract" = "add") {
+    static async updateStock(id: string | Types.ObjectId, units: number, operation: "add" | "substract" = "add") {
+
         const product = await ProductModel.findByIdAndUpdate(
             { _id: id },
             { $inc: { stock: operation === "add" ? units : -units } },
             { new: true }
         );
+        console.log({ product })
         if (product) {
             return {
                 id: product.id,

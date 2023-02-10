@@ -5,7 +5,7 @@ import {
   modelOptions
 } from '@typegoose/typegoose'
 import { SoldProducts } from './sold-products.entity'
-import { ObjectId } from 'mongodb'
+import { Types } from 'mongoose'
 
 @modelOptions({
   options: { customName: 'sales' },
@@ -22,11 +22,11 @@ export class Sales {
     id?: string;
 
     @prop({ ref: 'companies', required: true })
-    company: ObjectId;
+    company: Types.ObjectId;
 
-    // @Field((type) => mongoose.Types.ObjectId, { nullable: true })
+    // @Field((type) => mongoose.Types.Types.ObjectId, { nullable: true })
     @prop({ ref: 'clients' })
-    client: ObjectId | null;
+    client: Types.ObjectId | null;
 
     @Field()
     @prop({ default: false })

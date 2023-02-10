@@ -1,16 +1,16 @@
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose"
 import { Field, InputType } from "type-graphql";
 
 @InputType()
 export class CreateCashMovementInput {
-    @Field(() => ObjectId, { nullable: true })
-    transactionId?: ObjectId;
+    @Field(() => Types.ObjectId, { nullable: true })
+    transactionId?: Types.ObjectId;
 
     @Field({ nullable: true })
     cashMovementName?: string;
 
     @Field({ nullable: true })
-    typeCashMovementsId?: ObjectId;
+    typeCashMovementsId?: Types.ObjectId;
 
     @Field()
     amount: number;
