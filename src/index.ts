@@ -9,10 +9,11 @@ import { UsersService } from "server/modules/users/services/users.service";
 import { CompanyModel } from "server/modules/companies/entities";
 import { EstablishmentService } from "server/modules/establishments/establishment.service";
 import { CashierService } from "server/modules/cashiers/services/cashier.service";
-import cors from 'cors'
 
 const app = express();
 const httpServer = http.createServer(app);
+
+const PORT = process.env.PORT || 4000;
 
 async function main() {
     await createConnection()
@@ -81,8 +82,8 @@ async function main() {
         }
     })
 
-    await new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve))
-    console.log(`🚀 Server ready at http://localhost:4000/api/graphql`);
+    await new Promise<void>((resolve) => httpServer.listen({ port: PORT }, resolve))
+    console.log(`🚀 Server ready at http://localhost:${PORT}/api/graphql`);
 }
 
 main()
