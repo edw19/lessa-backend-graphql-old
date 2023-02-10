@@ -31,7 +31,7 @@ export class ClientsService {
     return await ClientsModel.findById(id);
   }
 
-  static async getBestClients(companyId: ObjectId, orderBy: string, limit: number) {
+  static async getBestClients(companyId: any, orderBy: string, limit: number) {
     const type = (orderBy === 'amount') ? '$total' : 1;
     const result = await SalesModel.aggregate()
       .match({ company: new mongoose.Types.ObjectId(companyId) })

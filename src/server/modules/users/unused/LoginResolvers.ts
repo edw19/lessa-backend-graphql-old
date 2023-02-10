@@ -3,7 +3,7 @@ import { InputUserLogin } from "./Inputs";
 import { JWT } from "../../../utils/jwt";
 import type { MyContext } from "../../../@types/MyContext";
 import { CompanyService } from "modules/companies/services/company.services";
-import { setCookie } from 'server/utils/setCookie'
+// import { setCookie } from 'server/utils/setCookie'
 import { UsersService } from "../services/users.service";
 
 @Resolver()

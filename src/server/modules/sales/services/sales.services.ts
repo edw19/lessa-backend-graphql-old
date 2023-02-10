@@ -162,7 +162,7 @@ export class SalesService {
         return total
     }
 
-    static async totalSalesAndAmount({ company, queryBy }: { company: ObjectId, queryBy?: string, dateStart?: Date, dateEnd?: Date }) {
+    static async totalSalesAndAmount({ company, queryBy }: { company: any, queryBy?: string, dateStart?: Date, dateEnd?: Date }) {
         const { parseDateEnd, parseDateStart } = DatesServices.getDatesRange({ queryBy })
         const result = await SalesModel.aggregate([
             {
@@ -189,7 +189,7 @@ export class SalesService {
         return { id: generateObjectId(), total, salesCount }
     }
 
-    static async mostSelledProducts({ company, queryBy }: { company: ObjectId, queryBy: string }) {
+    static async mostSelledProducts({ company, queryBy }: { company: any, queryBy: string }) {
         const { parseDateEnd, parseDateStart } = DatesServices.getDatesRange({ queryBy })
         const result = await SalesModel.aggregate([
             {

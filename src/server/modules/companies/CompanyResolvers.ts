@@ -5,7 +5,6 @@ import { InputAddSignature, InputCreateCompany } from "./InputsCompany";
 // import { CompanyService } from "../../services/companies";
 import { Company } from "modules/companies/entities";
 import { JWT } from "server/utils/jwt";
-import { setCookie } from "server/utils/setCookie";
 
 @Resolver()
 export class CompanyResolvers {

@@ -4,7 +4,7 @@ import formidable from 'formidable'
 import forge from 'node-forge'
 import { createConnection } from '../../utils/createConnection'
 import { CompanyModel } from '../../modules/companies/entities/company.entity'
-import { getToken } from 'next-auth/jwt'
+// import { getToken } from 'next-auth/jwt'
 import { ObjectId } from 'mongodb'
 
 export const saveSign = async (req: any, res: any) => {
@@ -13,21 +13,21 @@ export const saveSign = async (req: any, res: any) => {
     req.cookies = cookies
   }
 
-  const token = await getToken({ req, secret: 'my-super-secret-key' })
+  // const token = await getToken({ req, secret: 'my-super-secret-key' })
 
-  if (token) {
-    await createConnection()
-    const userId: any = token.sub
-    const company = await CompanyModel.findOne({ userOwner: userId })
+  // if (token) {
+  //   await createConnection()
+  //   const userId: any = token.sub
+  //   const company = await CompanyModel.findOne({ userOwner: userId })
 
-    if (userId && company) {
-      req.user = { id: userId }
-      req.company = { id: company.id }
-    }
-  }
+  //   if (userId && company) {
+  //     req.user = { id: userId }
+  //     req.company = { id: company.id }
+  //   }
+  // }
 
   const formi = new formidable.IncomingForm()
-  formi.parse(req, async (err, fields, files: any) => {
+  formi.parse(req, async (err: any, fields: any, files: any) => {
     try {
       const companyId = req.company?.id
 

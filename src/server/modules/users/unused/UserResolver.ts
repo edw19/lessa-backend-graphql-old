@@ -5,7 +5,7 @@ import { User, UserModel } from "modules/users/entities";
 import { CompanyModel } from "modules/companies/entities";
 import { mongoose } from "@typegoose/typegoose";
 import { JWT } from "server/utils/jwt";
-import { setCookie } from "server/utils/setCookie";
+// import { setCookie } from "server/utils/setCookie";
 import { ObjectId } from "mongodb";
 import { UsersService } from "../services/users.service";
 
@@ -71,10 +71,10 @@ export class UserResolver {
     };
 
     const { accessToken, refreshToken } = JWT.createTokens(payload);
-    setCookie(ctx.res, [
-      `access-token=${accessToken}`,
-      `refresh-token=${refreshToken}`,
-    ]);
+    // setCookie(ctx.res, [
+    //   `access-token=${accessToken}`,
+    //   `refresh-token=${refreshToken}`,
+    // ]);
 
     return true;
   }
@@ -89,11 +89,11 @@ export class UserResolver {
       user: ctx.req.user,
       company: { id: company },
     });
-    setCookie(ctx.res, [
-      `accessToCompanyFromOwner=${true}`,
-      `access-token=${accessToken}`,
-      `refresh-token=${refreshToken}`,
-    ]);
+    // setCookie(ctx.res, [
+    //   `accessToCompanyFromOwner=${true}`,
+    //   `access-token=${accessToken}`,
+    //   `refresh-token=${refreshToken}`,
+    // ]);
     return true;
   }
   @Authorized("USER-OWNER")
@@ -104,10 +104,10 @@ export class UserResolver {
       user: req.user,
     });
 
-    setCookie(res, [
-      `access-token=${accessToken}`,
-      `refresh-token=${refreshToken}`,
-    ]);
+    // setCookie(res, [
+    //   `access-token=${accessToken}`,
+    //   `refresh-token=${refreshToken}`,
+    // ]);
 
     return true;
   }

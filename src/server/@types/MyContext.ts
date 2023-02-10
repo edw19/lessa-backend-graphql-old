@@ -1,8 +1,8 @@
-import { NextApiRequest, NextApiResponse } from "next";
+// import { NextApiRequest, NextApiResponse } from "next";
 
 export interface MyContext {
-  req: NextApiRequest;
-  res: NextApiResponse;
+  req: any;
+  res: any;
 }
 
-export interface Request extends NextApiRequest {}
+// export interface Request extends NextApiRequest {}
