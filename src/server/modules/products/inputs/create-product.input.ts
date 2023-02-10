@@ -23,7 +23,7 @@ export class CreateProductInput {
     description: string;
 
     @Field(() => Types.ObjectId,{ nullable: true })
-    category: mongoose.Types.Types.ObjectId;
+    category: mongoose.Types.ObjectId;
 
     @Field({ nullable: true })
     priceBuy: number;

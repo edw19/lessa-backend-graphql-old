@@ -20,8 +20,11 @@ async function main() {
         schema: createSchema(),
         csrfPrevention: true,
         cache: 'bounded',
-        plugins: [ApolloServerPluginDrainHttpServer({ httpServer }),
-        ApolloServerPluginLandingPageLocalDefault({ embed: true })],
+        introspection: process.env.NODE_ENV !== 'production',
+        plugins: [
+            ApolloServerPluginDrainHttpServer({ httpServer }),
+            ApolloServerPluginLandingPageLocalDefault({ embed: true })
+        ],
         context: async ({ req, res }) => {
             // if (req?.cookies?.ssr || Object.keys(req.cookies).length === 0) {
             //     const cookies = JSON.parse(req.headers.cookie!);

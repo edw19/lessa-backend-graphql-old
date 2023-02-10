@@ -11,10 +11,8 @@ export class SalesMutationResolver {
   @Authorized("USER-COMPANY")
   @Mutation(() => ReturnCreateSale, { nullable: true })
   async createSale(@Arg("sale") sale: CreateSaleInput, @Ctx() { req }: MyContext) {
-    // console.log("llega a la mutation", sale)
     try {
       const { products, saleId } = await SalesService.createSaleService({ ...sale, company: req.company.id });
-      // console.log({products})
       if (sale.credit) {
         await SalesService.saveCreditOnSale({
           client: sale.client,

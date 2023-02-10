@@ -37,16 +37,12 @@ export class SalesService {
         const products = [];
         const newSale = await SalesService.createSale(sale);
 
-        console.log({ products: sale.products })
         for (const product of sale.products) {
 
             if (product.kind === "CommonProduct" || product.kind === "Service") continue;
             const productUpdated = await ProductMutationService.updateStock(product.productId, product.units, "substract");
-            console.log({ productUpdated: product.productId })
             products.push({ id: productUpdated?.id, stock: productUpdated?.stock })
         }
-
-        // console.log({ aqui: products, newSale })
 
         return { saleId: newSale.id, products };
     }

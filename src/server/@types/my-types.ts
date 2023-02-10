@@ -1,1 +1,1 @@
-export type { Types.ObjectId } from 'mongodb'
+export type { Types } from 'mongoose'

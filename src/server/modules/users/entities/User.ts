@@ -17,7 +17,7 @@ export class User {
   id?: string;
 
   // @prop()
-  // userOwner?: mongoose.Types.Types.ObjectId;
+  // userOwner?: mongoose.Types.ObjectId;
 
   @Field(() => Types.ObjectId,{ nullable: true })
   @prop()

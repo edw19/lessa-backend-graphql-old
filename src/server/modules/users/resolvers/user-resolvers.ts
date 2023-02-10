@@ -19,8 +19,6 @@ export class UserResolver {
     async registerUser(
         @Arg("user") user: UserRegisterInput,
     ): Promise<string> {
-        console.log({ user })
-
         return await UsersService.getStartedUser(user);
     }
 

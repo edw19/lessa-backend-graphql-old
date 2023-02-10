@@ -5,7 +5,7 @@ import { Field, ObjectType } from "type-graphql";
 @ObjectType()
 export class InvestmentCategory {
     @Field(() => Types.ObjectId,{ nullable: true })
-    id: mongoose.Types.Types.ObjectId;
+    id: mongoose.Types.ObjectId;
 
     @Field()
     name: string;

@@ -24,7 +24,7 @@ export class Sales {
     @prop({ ref: 'companies', required: true })
     company: Types.ObjectId;
 
-    // @Field((type) => mongoose.Types.Types.ObjectId, { nullable: true })
+    // @Field((type) => mongoose.Types.ObjectId, { nullable: true })
     @prop({ ref: 'clients' })
     client: Types.ObjectId | null;
 

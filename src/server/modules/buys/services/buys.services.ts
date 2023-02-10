@@ -90,7 +90,7 @@ export class BuysService {
     const result = await BuysModel.aggregate([
       {
         $match: {
-          company: new mongoose.Types.Types.ObjectId(company),
+          company: new mongoose.Types.ObjectId(company),
           createdAt: {
             $gte: parseDateStart,
             $lte: parseDateEnd

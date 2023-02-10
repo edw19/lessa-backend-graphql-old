@@ -63,7 +63,7 @@ export class UserResolver {
     );
     // update userOwner and usrAdmin for Companies
     await CompanyModel.findByIdAndUpdate(ctx.req.company!.id, {
-      $set: { userOwner: new mongoose.Types.Types.ObjectId(ctx.req.user.id) },
+      $set: { userOwner: new mongoose.Types.ObjectId(ctx.req.user.id) },
     });
 
     let payload: any = {

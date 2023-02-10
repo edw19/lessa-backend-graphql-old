@@ -26,8 +26,6 @@ export class ProductsQueryResolver {
   @Query(() => [Product], { nullable: true })
   async getAllProducts(@Ctx() { req }: MyContext) {
     const another = await ProductsQueryService.getAllProducts(req.company.id);
-    console.log({another})
-    
     return another
   }
 
@@ -76,7 +74,7 @@ export class ProductsQueryResolver {
   @Query(() => [InvestmentCategory])
   async investmentProductsByCategory(@Ctx() { req }: MyContext) {
     const categories = await CategoriesModel.aggregate([
-      { $match: { company: new mongoose.Types.Types.ObjectId(req.company!.id) } },
+      { $match: { company: new mongoose.Types.ObjectId(req.company!.id) } },
       {
         $lookup: {
           from: "products",
@@ -120,14 +118,14 @@ export class ProductsQueryResolver {
     const dateDayAgo = subDays(date, 1);
     try {
       const salesMonthly = await SalesModel.countDocuments({
-        company: new mongoose.Types.Types.ObjectId(req.company.id),
+        company: new mongoose.Types.ObjectId(req.company.id),
         createdAt: {
           $gte: dateMonthAgo,
           $lte: dateDayAgo,
         },
       });
       const [{ totalStock }] = await ProductModel.aggregate([
-        { $match: { company: new mongoose.Types.Types.ObjectId(req.company!.id) } },
+        { $match: { company: new mongoose.Types.ObjectId(req.company!.id) } },
         { $group: { _id: "$company", totalStock: { $sum: "$stock" } } },
         { $project: { _id: false, totalStock: true } },
       ]);
@@ -145,7 +143,7 @@ export class ProductsQueryResolver {
   async percentProductsByCategories(@Ctx() { req }: MyContext) {
     try {
       const result = await CategoriesModel.aggregate([
-        { $match: { company: new mongoose.Types.Types.ObjectId(req.company!.id) } },
+        { $match: { company: new mongoose.Types.ObjectId(req.company!.id) } },
         {
           $lookup: {
             from: "products",
@@ -194,7 +192,7 @@ export class ProductsQueryResolver {
       const date = new Date();
       const dateYearAgo = addMonths(date, months);
       const productsExpires = await ProductModel.find({
-        company: new mongoose.Types.Types.ObjectId(req.company!.id),
+        company: new mongoose.Types.ObjectId(req.company!.id),
         dateExpires: { $gte: date, $lte: dateYearAgo },
       });
       return productsExpires;
