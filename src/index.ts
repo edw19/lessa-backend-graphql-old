@@ -11,7 +11,7 @@ import { EstablishmentService } from "server/modules/establishments/establishmen
 import { CashierService } from "server/modules/cashiers/services/cashier.service";
 import cookies from 'cookie-parser'
 import { decode } from 'next-auth/jwt'
-import cors from 'cors'
+// import cors from 'cors'
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -22,11 +22,11 @@ async function main() {
     await createConnection()
     
     app.use(cookies())
-    app.use(cors({
-        origin: ['http://localhost:3000', "https://www.lessa.app/", "https://lessa.vercel.app/"],
-        credentials: true,
-        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    }))
+    // app.use(cors({
+    //     origin: ['http://localhost:3000', "https://www.lessa.app/", "https://lessa.vercel.app/"],
+    //     credentials: true,
+    //     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    // }))
 
     const httpServer = http.createServer(app);
     
@@ -91,11 +91,13 @@ async function main() {
     server.applyMiddleware({
         app,
         path: '/api/graphql',
-        cors: false
-        // cors: {
-        //     origin: ['http://localhost:3000/', "https://www.lessa.app/", "https://lessa.vercel.app/"],
-        //     credentials: true
-        // }
+        // cors: false,
+        cors: {
+            origin: ['http://localhost:3000/', "https://www.lessa.app/", "https://lessa.vercel.app/"],
+            credentials: true,
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+            allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept', "header"],
+        }
     })
 
     await new Promise<void>((resolve) => httpServer.listen({ port: PORT }, resolve))
