@@ -16,6 +16,7 @@ export class RegisterResolvers {
   async registerUser(
     @Arg("user") user: InputUserRegister,
   ): Promise<string> {
+    console.log("unused", user)
     const newUser = await UsersService.registerUser(user);
     const defaultTradename = newUser.username!.toLowerCase().trim().split(" ")[0]
     const newCompany = await CompanyService.createCompany({ userOwner: newUser.id, tradename: defaultTradename })

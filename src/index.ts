@@ -9,14 +9,21 @@ import { UsersService } from "server/modules/users/services/users.service";
 import { CompanyModel } from "server/modules/companies/entities";
 import { EstablishmentService } from "server/modules/establishments/establishment.service";
 import { CashierService } from "server/modules/cashiers/services/cashier.service";
+import cookies from 'cookie-parser'
+import { decode } from 'next-auth/jwt'
 
 const app = express();
-const httpServer = http.createServer(app);
-
 const PORT = process.env.PORT || 4000;
+
+
 
 async function main() {
     await createConnection()
+    
+    app.use(cookies())
+    const httpServer = http.createServer(app);
+    
+    
     const server = new ApolloServer({
         schema: createSchema(),
         csrfPrevention: true,
@@ -27,50 +34,51 @@ async function main() {
             ApolloServerPluginLandingPageLocalDefault({ embed: true })
         ],
         context: async ({ req, res }) => {
-            // if (req?.cookies?.ssr || Object.keys(req.cookies).length === 0) {
-            //     const cookies = JSON.parse(req.headers.cookie!);
-            //     req.cookies = cookies;
-            // }
-            // const token = await getToken({ req, secret: "my-super-secret-key" })
+            try {
+                const secretKey = 'my-super-secret-key';
+                const token = req.headers.cookie?.split(" ")[2].replace("next-auth.session-token=", "")
+                const payload = await decode({ secret: secretKey, token: token! })
 
-            // if (token) {
-            const userId: any = "63083b83c028fca66f5b4155";
-            const currentUser = await UsersService.getUser(userId);
-            // if user is a cashier
-            if (currentUser && currentUser.role.includes("USER-CASHIER")) {
-                //@ts-ignore
-                req.user = { id: currentUser.id };
-                //@ts-ignore
-                req.company = { id: currentUser.company! };
-                //@ts-ignore
-                req.establishment = { id: currentUser.establishment! };
-                //@ts-ignore
-                req.cashier = { id: currentUser.cashier! };
-            } else {
+                if (!payload) return { req, res }
 
-                const company = await CompanyModel.findOne({ userOwner: userId })
-                const establishment = await EstablishmentService.getMainEstablishment(company!.id)
-                const cashier = await CashierService.getCashierByUserId(userId);
+                const userId = payload?.sub! as any;
 
-                if (userId && company && establishment && cashier) {
+                const currentUser = await UsersService.getUser(userId);
+                // if user is a cashier
+                if (currentUser && currentUser.role.includes("USER-CASHIER")) {
                     //@ts-ignore
-                    req.user = { id: userId };
+                    req.user = { id: currentUser.id };
                     //@ts-ignore
-                    req.company = { id: company.id };
+                    req.company = { id: currentUser.company! };
                     //@ts-ignore
+                    req.establishment = { id: currentUser.establishment! };
                     //@ts-ignore
-                    req.establishment = { id: establishment.id };
-                    //@ts-ignore
-                    req.cashier = { id: cashier.id };
+                    req.cashier = { id: currentUser.cashier! };
+                } else {
+
+                    const company = await CompanyModel.findOne({ userOwner: userId })
+                    const establishment = await EstablishmentService.getMainEstablishment(company!.id)
+                    const cashier = await CashierService.getCashierByUserId(userId);
+
+                    if (userId && company && establishment && cashier) {
+                        //@ts-ignore
+                        req.user = { id: userId };
+                        //@ts-ignore
+                        req.company = { id: company.id };
+                        //@ts-ignore
+                        //@ts-ignore
+                        req.establishment = { id: establishment.id };
+                        //@ts-ignore
+                        req.cashier = { id: cashier.id };
+                    }
                 }
+                return { req, res };
+            } catch (error) {
+                console.log({ error })
             }
-            // }
-
-            // @ts-ignore
-            console.log({ user: req.user })
-            return { req, res };
         },
     });
+
     await server.start()
 
     server.applyMiddleware({

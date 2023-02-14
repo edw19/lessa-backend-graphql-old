@@ -4,7 +4,7 @@ import type { MyContext } from "server/@types/MyContext";
 import { UsersService } from "../services/users.service";
 import { UserRegisterInput } from "../inputs/user-register.input";
 import { CreateUserForTheCompanyInput } from "../inputs/create-user-for-the-company.input";
-import {} from 'modules/users/entities'
+import { } from 'modules/users/entities'
 
 @Resolver()
 export class UserResolver {
@@ -19,6 +19,8 @@ export class UserResolver {
     async registerUser(
         @Arg("user") user: UserRegisterInput,
     ): Promise<string> {
+        console.log({ user })
+
         return await UsersService.getStartedUser(user);
     }
 
