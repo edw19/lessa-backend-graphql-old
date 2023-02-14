@@ -85,7 +85,7 @@ async function main() {
         app,
         path: '/api/graphql',
         cors: {
-            origin: ['http://localhost:3000', "https://www.lessa.app'"],
+            origin: "*",
             credentials: true
         }
     })
