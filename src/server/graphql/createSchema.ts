@@ -1,6 +1,6 @@
 import { Types } from "mongoose"
 import { ObjectIdScalar } from "./object-id-scalar";
-import { buildSchemaSync } from "type-graphql";
+import { buildSchemaSync, buildSchema } from "type-graphql";
 // middlewares
 import { authChecker } from "./authChecker";
 // users
@@ -48,9 +48,8 @@ import { TypeCashMovementsResolver } from "../modules/cash_movements/resolvers/t
 
 // cashier 
 import { CashierResolver } from "../modules/cashiers/resolvers/cashier.resolver";
-import { TypegooseMiddleware } from "./typegoose-middleware";
 
-export const createSchema = () => buildSchemaSync({
+export const createSchema = async () => await buildSchema({
   resolvers: [
     // RegisterResolvers,
     // LoginResolvers,
@@ -76,8 +75,9 @@ export const createSchema = () => buildSchemaSync({
     CashierResolver,
   ],
   authChecker,
-  // globalMiddlewares: [TypegooseMiddleware],
   scalarsMap: [{ type: Types.ObjectId, scalar: ObjectIdScalar }],
   dateScalarMode: 'isoDate',
-  validate: false,
+  validate: {
+    forbidUnknownValues: false,
+  },
 });
