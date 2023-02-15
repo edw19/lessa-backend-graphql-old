@@ -18,7 +18,6 @@ import { json } from 'body-parser'
 const PORT = process.env.PORT || 4000;
 const GRAPHQL_PATH = "/api/graphql";
 
-
 async function main() {
     await createConnection()
 
@@ -45,17 +44,20 @@ async function main() {
                 try {
                     const secretKey = 'my-super-secret-key';
                     let userId;
-                    
+
                     const token = req.headers.cookie?.split(" ")?.[2]?.replace("next-auth.session-token=", "")
+
+
                     if (token) {
                         const payload = await decode({ secret: secretKey, token: token! })
                         userId = payload?.sub as any;
                     }
-                    const userIdHeaders = req.headers["user-id"] as any
+                    const userIdSSR = req.headers["user-id"] as any
 
-                    if (userIdHeaders) {
-                        userId = userIdHeaders
+                    if (userIdSSR) {
+                        userId = userIdSSR
                     }
+                    console.log({ userIdSSR, token: !!token, userId })
 
                     if (!userId) return { req, res }
 
