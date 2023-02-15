@@ -57,11 +57,9 @@ async function main() {
                     if (userIdSSR) {
                         userId = userIdSSR
                     }
-                    console.log({ userIdSSR, token: !!token, userId })
-
-                    if (!userId) return { req, res }
-
+                    
                     const currentUser = await UsersService.getUser(userId);
+                    console.log({ userIdSSR, token: !!token, userId, currentUser })
                     // if user is a cashier
                     if (currentUser && currentUser.role.includes("USER-CASHIER")) {
                         //@ts-ignore
