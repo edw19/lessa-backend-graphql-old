@@ -35,7 +35,7 @@ async function main() {
     app.use(
         GRAPHQL_PATH,
         cors({
-            origin: ['http://localhost:3000', "https://www.lessa.app/", "https://lessa.vercel.app/"],
+            origin: ['http://localhost:3000', "https://www.lessa.app", "https://lessa.vercel.app"],
             credentials: true,
         }),
         cookies(),
