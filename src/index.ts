@@ -44,12 +44,20 @@ async function main() {
             context: async ({ req, res }) => {
                 try {
                     const secretKey = 'my-super-secret-key';
-                    const token = req.headers.cookie?.split(" ")[2].replace("next-auth.session-token=", "")
-                    const payload = await decode({ secret: secretKey, token: token! })
+                    let userId;
+                    
+                    const token = req.headers.cookie?.split(" ")?.[2]?.replace("next-auth.session-token=", "")
+                    if (token) {
+                        const payload = await decode({ secret: secretKey, token: token! })
+                        userId = payload?.sub as any;
+                    }
+                    const userIdHeaders = req.headers["user-id"] as any
 
-                    if (!payload) return { req, res }
+                    if (userIdHeaders) {
+                        userId = userIdHeaders
+                    }
 
-                    const userId = payload?.sub! as any;
+                    if (!userId) return { req, res }
 
                     const currentUser = await UsersService.getUser(userId);
                     // if user is a cashier
