@@ -26,6 +26,7 @@ specifiers:
   cors: ^2.8.5
   crypto-js: ^4.1.1
   date-fns: ^2.29.3
+  dotenv: ^16.0.3
   express: ^4.18.2
   formidable: ^2.1.1
   graphql: 16.6.0
@@ -59,6 +60,7 @@ dependencies:
   cors: 2.8.5
   crypto-js: 4.1.1
   date-fns: 2.29.3
+  dotenv: 16.0.3
   express: 4.18.2
   formidable: 2.1.1
   graphql: 16.6.0
@@ -1849,6 +1851,11 @@ packages:
   /diff/4.0.2:
     resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
     engines: {node: '>=0.3.1'}
+
+  /dotenv/16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /dynamic-dedupe/0.3.0:
     resolution: {integrity: sha512-ssuANeD+z97meYOqd50e04Ze5qp4bPqo8cCkI4TRjZkzAUgIDTrXV1R8QCdINpiI+hw14+rYazvTRdQrz0/rFQ==}
