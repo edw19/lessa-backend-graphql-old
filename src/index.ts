@@ -59,6 +59,8 @@ async function main() {
                     if (userIdSSR) {
                         userId = userIdSSR
                     }
+
+                    if(!userId) return { req, res }
                     
                     const currentUser = await UsersService.getUser(userId);
                     console.log({ userIdSSR, token: !!token, userId, currentUser })
