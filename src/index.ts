@@ -39,17 +39,28 @@ async function main() {
         })
     )
     app.use(cookies())
-    app.use(async (req, res, next) => {       
+    app.use(async (req, res, next) => {
         const secretKey = 'my-super-secret-key';
         const token = req.cookies["next-auth.session-token"]
 
-        if (!token || req.headers["user-id"]) {
+        let id;
+
+        if (token) {
+            const payload = await decode({ secret: secretKey, token: token! })
+            id = payload?.sub as any;
+        }
+
+        if (req.headers["user-id"]) {
+            id = req.headers["user-id"]
+        }
+
+        if (!id) {
             res.status(401);
             res.send('Access forbidden');
         }
-        const payload = await decode({ secret: secretKey, token: token! })
+
         //@ts-ignore
-        req.user = { id: req.headers["user-id"] ?? payload.sub  };
+        req.user = { id: req.headers["user-id"] ?? payload.sub };
 
         next();
     })
