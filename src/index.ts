@@ -32,38 +32,54 @@ async function main() {
     });
 
     await apolloServer.start();
-
     app.use(
-        GRAPHQL_PATH,
         cors({
             origin: ['http://localhost:3000', "https://www.lessa.app", "https://lessa.vercel.app"],
             credentials: true,
-        }),
-        cookies(),
+        })
+    )
+    app.use(cookies())
+    app.use(async (req, res, next) => {       
+        const secretKey = 'my-super-secret-key';
+        const token = req.cookies["next-auth.session-token"]
+
+        if (!token || req.headers["user-id"]) {
+            res.status(401);
+            res.send('Access forbidden');
+        }
+        const payload = await decode({ secret: secretKey, token: token! })
+        //@ts-ignore
+        req.user = { id: req.headers["user-id"] ?? payload.sub  };
+
+        next();
+    })
+    app.use(
+        GRAPHQL_PATH,
         json(),
         expressMiddleware(apolloServer, {
             context: async ({ req, res }) => {
                 try {
-                    const secretKey = 'my-super-secret-key';
-                    let userId;
+                    // const secretKey = 'my-super-secret-key';
+                    // @ts-ignore
+                    let userId = req.user.id
 
-                    const token = req.headers.cookie?.split(" ")?.[2]?.replace("next-auth.session-token=", "")
+                    // const token = req.headers.cookie?.split(" ")?.[2]?.replace("next-auth.session-token=", "")
 
 
-                    if (token) {
-                        const payload = await decode({ secret: secretKey, token: token! })
-                        userId = payload?.sub as any;
-                    }
-                    const userIdSSR = req.headers["user-id"] as any
+                    // if (token) {
+                    //     const payload = await decode({ secret: secretKey, token: token! })
+                    //     userId = payload?.sub as any;
+                    // }
+                    // const userIdSSR = req.headers["user-id"] as any
 
-                    if (userIdSSR) {
-                        userId = userIdSSR
-                    }
+                    // if (userIdSSR) {
+                    //     userId = userIdSSR
+                    // }
 
-                    if(!userId) return { req, res }
-                    
+                    // if (!userId) return { req, res }
+
                     const currentUser = await UsersService.getUser(userId);
-                    console.log({ userIdSSR, token: !!token, userId, currentUser })
+                    // console.log({ userIdSSR, token: !!token, userId, currentUser })
                     // if user is a cashier
                     if (currentUser && currentUser.role.includes("USER-CASHIER")) {
                         //@ts-ignore
