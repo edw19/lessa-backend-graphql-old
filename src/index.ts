@@ -62,7 +62,7 @@ async function main() {
         }
 
         //@ts-ignore
-        req.user = { id: req.headers["user-id"] ?? payload.sub };
+        req.user = { id };
 
         next();
     })
