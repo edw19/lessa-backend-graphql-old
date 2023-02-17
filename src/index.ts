@@ -54,6 +54,8 @@ async function main() {
             id = req.headers["user-id"]
         }
 
+        console.log({ token, reqId: req.headers["user-id"], id, })
+        
         if (!id) {
             res.status(401);
             res.send('Access forbidden');
